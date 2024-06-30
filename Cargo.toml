@@ -2,6 +2,8 @@
 name = "python-to-mermaid"
 version = "0.1.0"
 edition = "2021"
+description = "Convert Python code to Mermaid flowchart"
+license = "MIT"
 
 [dependencies]
 anyhow = "1.0.86"
