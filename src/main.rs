@@ -1,5 +1,4 @@
 use anyhow::Result;
-use python_to_mermaid::convert::{flowchart_to_mermaid, python_to_flowchart};
 use std::io::{stdin, Read};
 
 fn main() -> Result<()> {
@@ -9,22 +8,8 @@ fn main() -> Result<()> {
         buf
     };
 
-    let fn_defs = python_to_flowchart::enumerate_fn_defs(&source)?;
-    for fn_def in fn_defs {
-        let name = fn_def.name.clone();
-
-        let fc = python_to_flowchart::convert(fn_def)?;
-        let mfc = flowchart_to_mermaid::convert(&fc);
-
-        println!("## `{name}`");
-        println!();
-        println!("```mermaid");
-        let mut s = String::new();
-        mfc.render(&mut s);
-        println!("{}", s);
-        println!("```");
-        println!();
-    }
+    let markdown = python_to_mermaid::python_file_to_markdown(&source)?;
+    print!("{}", markdown);
 
     Ok(())
 }
