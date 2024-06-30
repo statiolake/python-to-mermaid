@@ -177,10 +177,28 @@ impl MermaidGraph {
     }
 
     pub fn render<W: fmt::Write>(self, writer: &mut W) {
+        self.render_nodes(writer);
+        self.render_edges(writer);
+    }
+
+    fn render_nodes<W: fmt::Write>(&self, writer: &mut W) {
         for node in &self.nodes {
             writeln!(writer, "{};", node).unwrap();
         }
 
+        for subgraph in &self.subgraphs {
+            writeln!(
+                writer,
+                "subgraph {}",
+                subgraph.label.as_deref().unwrap_or("")
+            )
+            .unwrap();
+            subgraph.render_nodes(writer);
+            writeln!(writer, "end").unwrap();
+        }
+    }
+
+    fn render_edges<W: fmt::Write>(&self, writer: &mut W) {
         for edge in &self.edges {
             if let Some(label) = &edge.label {
                 writeln!(writer, r#"{} -->|"{}"| {};"#, edge.id0, label, edge.id1).unwrap();
@@ -189,8 +207,9 @@ impl MermaidGraph {
             }
         }
 
-        for subgraph in self.subgraphs {
-            subgraph.render(writer);
+        for subgraph in &self.subgraphs {
+            // Do not include edges within `subgraph ... end` block
+            subgraph.render_edges(writer);
         }
     }
 }

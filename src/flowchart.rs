@@ -23,6 +23,9 @@ impl Flowchart {
 pub enum FlowchartItem {
     Step(Step),
     Condition(Condition),
+    Continue(Continue),
+    Break(Break),
+    Terminal(Terminal),
     SubFlowchart(Flowchart),
 }
 
@@ -32,9 +35,9 @@ pub struct Step {
 }
 
 impl Step {
-    pub fn new(label: impl AsRef<str>) -> Self {
+    pub fn new(label: impl Into<String>) -> Self {
         Self {
-            label: label.as_ref().to_string(),
+            label: label.into(),
         }
     }
 }
@@ -47,11 +50,50 @@ pub struct Condition {
 }
 
 impl Condition {
-    pub fn new(condition: impl AsRef<str>) -> Self {
+    pub fn new(condition: impl Into<String>) -> Self {
         Self {
-            condition: condition.as_ref().to_string(),
+            condition: condition.into(),
             then_items: Vec::new(),
             else_items: Vec::new(),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Continue {
+    pub label: String,
+}
+
+impl Continue {
+    pub fn new(label: impl Into<String>) -> Self {
+        Self {
+            label: label.into(),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Break {
+    pub label: String,
+}
+
+impl Break {
+    pub fn new(label: impl Into<String>) -> Self {
+        Self {
+            label: label.into(),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Terminal {
+    pub label: String,
+}
+
+impl Terminal {
+    pub fn new(label: impl Into<String>) -> Self {
+        Self {
+            label: label.into(),
         }
     }
 }

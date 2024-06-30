@@ -83,7 +83,7 @@ impl<'f> ast::Visitor for FlowchartGenerator<'f> {
     fn visit_stmt_return(&mut self, node: ast::StmtReturn) {
         self.fc
             .items
-            .push(FlowchartItem::Step(flowchart::Step::new("Return")));
+            .push(FlowchartItem::Terminal(flowchart::Terminal::new("Return")));
     }
 
     fn visit_stmt_delete(&mut self, node: ast::StmtDelete) {
@@ -196,7 +196,7 @@ impl<'f> ast::Visitor for FlowchartGenerator<'f> {
     fn visit_stmt_raise(&mut self, node: ast::StmtRaise) {
         self.fc
             .items
-            .push(FlowchartItem::Step(flowchart::Step::new("Raise")));
+            .push(FlowchartItem::Terminal(flowchart::Terminal::new("Raise")));
     }
 
     fn visit_stmt_try(&mut self, node: ast::StmtTry) {
@@ -208,7 +208,21 @@ impl<'f> ast::Visitor for FlowchartGenerator<'f> {
 
     fn visit_stmt_expr(&mut self, node: ast::StmtExpr) {
         self.fc.items.push(FlowchartItem::Step(flowchart::Step::new(
-            node.value.to_string(),
+            node.value.to_string().replace('"', ""),
         )));
+    }
+
+    fn visit_stmt_break(&mut self, node: ast::StmtBreak) {
+        self.fc
+            .items
+            .push(FlowchartItem::Break(flowchart::Break::new("Break")));
+    }
+
+    fn visit_stmt_continue(&mut self, node: ast::StmtContinue) {
+        self.fc
+            .items
+            .push(FlowchartItem::Continue(flowchart::Continue::new(
+                "Continue",
+            )));
     }
 }
