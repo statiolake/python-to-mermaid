@@ -93,7 +93,6 @@ pub struct Edge {
 
 #[derive(Debug, Clone)]
 pub struct MermaidFlowchart {
-    id_gen: Rc<RefCell<NodeIdGenerator>>,
     graph: MermaidGraph,
 }
 
@@ -110,7 +109,7 @@ impl MermaidFlowchart {
     pub fn new() -> Self {
         let id_gen = Rc::new(RefCell::new(NodeIdGenerator::new()));
         let graph = MermaidGraph::new(Rc::clone(&id_gen));
-        Self { id_gen, graph }
+        Self { graph }
     }
 
     pub fn graph_mut(&mut self) -> &mut MermaidGraph {
