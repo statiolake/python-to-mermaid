@@ -16,7 +16,7 @@ fn main() -> Result<()> {
         let fc = python_to_flowchart::convert(fn_def)?;
         let mfc = flowchart_to_mermaid::convert(&fc);
 
-        println!("## {name}");
+        println!("## `{name}`");
         println!();
         println!("```mermaid");
         let mut s = String::new();

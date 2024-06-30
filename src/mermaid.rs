@@ -189,7 +189,7 @@ impl MermaidGraph {
         for subgraph in &self.subgraphs {
             writeln!(
                 writer,
-                "subgraph {}",
+                "subgraph \"{}\"",
                 subgraph.label.as_deref().unwrap_or("")
             )
             .unwrap();
