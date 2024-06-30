@@ -184,9 +184,9 @@ impl<'f> ast::Visitor for FlowchartGenerator<'f> {
     }
 
     fn visit_stmt_expr(&mut self, node: ast::StmtExpr) {
-        self.fc
-            .items
-            .push(FlowchartItem::Step(flowchart::Step::new("Expr")));
+        self.fc.items.push(FlowchartItem::Step(flowchart::Step::new(
+            node.value.to_string(),
+        )));
     }
 }
 
