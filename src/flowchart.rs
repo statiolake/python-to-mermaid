@@ -7,13 +7,33 @@ pub struct Flowchart {
 }
 
 impl Flowchart {
-    pub fn new(label: impl AsRef<str>) -> Self {
+    pub fn new_root(label: impl AsRef<str>) -> Self {
         let label = label.as_ref();
 
         Self {
             is_root: true,
             begin: format!("Begin: {label}"),
             end: format!("End: {label}"),
+            items: Vec::new(),
+        }
+    }
+
+    pub fn new_sub(label: impl AsRef<str>) -> Self {
+        let label = label.as_ref();
+
+        Self {
+            is_root: false,
+            begin: format!("Begin: {label}"),
+            end: format!("End: {label}"),
+            items: Vec::new(),
+        }
+    }
+
+    pub fn new_unlabeled_sub() -> Self {
+        Self {
+            is_root: false,
+            begin: "Begin".to_string(),
+            end: "End".to_string(),
             items: Vec::new(),
         }
     }

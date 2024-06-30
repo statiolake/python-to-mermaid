@@ -66,11 +66,11 @@ pub struct Node {
 impl fmt::Display for Node {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.shape {
-            NodeShape::Rounded => write!(f, "{}(\"{}\")", self.id, self.label),
-            NodeShape::Rectangle => write!(f, "{}[\"{}\"]", self.id, self.label),
-            NodeShape::Diamond => write!(f, "{}{{\"{}\"}}", self.id, self.label),
-            NodeShape::Trapezoid => write!(f, "{}[\\\"{}\"\\]", self.id, self.label),
-            NodeShape::InvertedTrapezoid => write!(f, "{}[/\"{}\"\\]", self.id, self.label),
+            NodeShape::Rounded => write!(f, r#"{}("{}")"#, self.id, self.label),
+            NodeShape::Rectangle => write!(f, r#"{}["{}"]"#, self.id, self.label),
+            NodeShape::Diamond => write!(f, r#"{}{{"{}"}}"#, self.id, self.label),
+            NodeShape::Trapezoid => write!(f, r#"{}[/"{}"\]"#, self.id, self.label),
+            NodeShape::InvertedTrapezoid => write!(f, r#"{}[\"{}"/]"#, self.id, self.label),
         }
     }
 }
